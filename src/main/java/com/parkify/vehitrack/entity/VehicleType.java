@@ -1,6 +1,6 @@
 package com.parkify.vehitrack.entity;
 
-public enum VehicalType {
+public enum VehicleType {
     CAR,
     MOPED,
     BIKE
