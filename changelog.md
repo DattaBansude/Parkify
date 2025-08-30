@@ -1,3 +1,14 @@
+## [VEHMS-M01-T006] - Tables Creation & Testing - 30-Aug-2025
+### Type: Development & Testing
+- Created **Postgres tables** based on implemented entities.
+- Configured **one-to-many relationships** with proper `@OneToMany` and `@ManyToOne` mappings.
+- Verified **table creation** through schema generation (`hibernate.hbm2ddl.auto=update`).
+- Performed initial **integration testing** to validate relationships and table creation.
+
+### Commit
+- Commit Message: `VEHMS-M01-T006: Created Postgres tables with one-to-many mappings and tested successfully`
+
+
 
 # Changelog
 
