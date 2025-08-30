@@ -1,3 +1,4 @@
+# Changelog
 ## [VEHMS-M01-T006] - Tables Creation & Testing - 30-Aug-2025
 ### Type: Development & Testing
 - Created **Postgres tables** based on implemented entities.
@@ -7,8 +8,6 @@
 
 ### Commit
 - Commit Message: `VEHMS-M01-T006: Created Postgres tables with one-to-many mappings and tested successfully`
-
-
 
 # Changelog
 
