@@ -7,6 +7,8 @@ import com.parkify.vehitrack.service.ResidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ResidentServiceImpl implements ResidentService {
 
@@ -29,5 +31,13 @@ public class ResidentServiceImpl implements ResidentService {
         // }
 
         return residentRepository.save(resident);
+    }
+
+    @Override
+    public List<Resident> getAllResidents() {
+
+        List<Resident> residentList = residentRepository.findAll();
+
+        return residentList;
     }
 }

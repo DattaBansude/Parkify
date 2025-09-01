@@ -1,5 +1,21 @@
 # Changelog
 
+## [VEHMS-M01-T010] - Get All Residents API - 31-Aug-2025
+### Type: Development
+- Implemented `GET /api/residents` endpoint to retrieve all residents.
+- Response includes:
+  - Resident details.
+  - Associated list of vehicles (if available).
+- Ensured empty lists are returned instead of null values.
+- API tested and verified via Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M01-T010: Added Get All Residents API with vehicles
+
+
+
+# Changelog
+
 ## [VEHMS-M01-T008] - Implement Swagger Documentation - 31-Aug-2025
 ### Type: Development
 - Integrated **Swagger (Springdoc OpenAPI)** for API documentation.
