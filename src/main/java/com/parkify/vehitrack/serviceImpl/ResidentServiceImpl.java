@@ -1,6 +1,7 @@
 package com.parkify.vehitrack.serviceImpl;
 
 import com.parkify.vehitrack.entity.Resident;
+import com.parkify.vehitrack.helper.VehicleHelper;
 import com.parkify.vehitrack.repository.ResidentRepository;
 import com.parkify.vehitrack.service.ResidentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,10 @@ public class ResidentServiceImpl implements ResidentService {
     public Resident createResident(Resident resident) {
 
         if (resident.getVehicleList() != null && !resident.getVehicleList().isEmpty()) {
-            resident.getVehicleList().forEach(vehicle -> vehicle.setResident(resident));
+            resident.getVehicleList().forEach(vehicle -> {
+                vehicle.setResident(resident);
+                VehicleHelper.initializeVehicle(vehicle);
+            });
         }
 
         // Optional: Check for duplicate email

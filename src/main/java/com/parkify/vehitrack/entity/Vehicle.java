@@ -27,6 +27,7 @@ public class Vehicle {
     private long id;
 
     @NotBlank(message = "Registration number is mandatory")
+    @Column(unique = true, nullable = false)
     private String registrationNumber;
 
     @NotBlank(message = "Vehicle name is mandatory")
@@ -40,20 +41,18 @@ public class Vehicle {
     private VehicleType vehicleType;
 
     @Column(nullable = false)
+    @Schema(hidden = true)
     private LocalDateTime associationActivatedAt;
 
+    @Schema(hidden = true)
     private LocalDateTime associationDeactivatedAt;
+
 
     private boolean isVehicleActive;
 
     @ManyToOne()
-    @JoinColumn(name = "resident_id",nullable = false)
+    @JoinColumn(name = "resident_id", nullable = false)
     @JsonBackReference
     private Resident resident;
 
-    @PrePersist
-    public void prePersist() {
-        this.associationActivatedAt = LocalDateTime.now();
-        this.isVehicleActive = true;
-    }
 }

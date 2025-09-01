@@ -1,4 +1,21 @@
 # Changelog
+
+## [VEHMS-M01-T008] - Implement Swagger Documentation - 31-Aug-2025
+### Type: Development
+- Integrated **Swagger (Springdoc OpenAPI)** for API documentation.
+- Added **title, description, and version** in API docs (`OpenAPI` config).
+- Documented every API with:
+  - Proper **summary** and **description**.
+  - Expected **request body** and **response messages**.
+  - **Error messages** for invalid inputs.
+- Verified Swagger UI is accessible at `/swagger-ui.html` and `/v3/api-docs`.
+
+### Commit
+- Commit Message: `VEHMS-M01-T008: Added Swagger documentation with proper descriptions for all APIs`
+
+
+
+# Changelog
 ## [VEHMS-M01-T006] - Tables Creation & Testing - 30-Aug-2025
 ### Type: Development & Testing
 - Created **Postgres tables** based on implemented entities.
