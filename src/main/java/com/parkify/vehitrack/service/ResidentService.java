@@ -10,4 +10,5 @@ public interface ResidentService {
 
     List<Resident> getAllResidents();
 
+    List<Resident> getResidentByName(String firstName, String lastName);
 }

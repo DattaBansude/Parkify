@@ -1,5 +1,20 @@
 # Changelog
 
+## [VEHMS-M01-T011] - Get Resident Details by Name API - 01-Sep-2025
+### Type: Development
+- Implemented `GET /api/residents/search` endpoint to fetch resident details by **first name, last name, or both**.
+- Added **validation** to reject numeric values in name inputs.
+- Returns a clear **error message** if no resident is found with the given input.
+- Ensured response is consistent and user-friendly for both success and error scenarios.
+- Verified and tested via Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M01-T011: Added API to fetch resident details by name with validation and error handling
+
+
+
+# Changelog
+
 ## [VEHMS-M01-T010] - Get All Residents API - 31-Aug-2025
 ### Type: Development
 - Implemented `GET /api/residents` endpoint to retrieve all residents.

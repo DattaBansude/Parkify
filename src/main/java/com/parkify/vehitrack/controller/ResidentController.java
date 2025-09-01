@@ -44,7 +44,15 @@ public class ResidentController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<Resident>> getAllResidents() {
-        List<Resident> residents =residentService.getAllResidents();
+        List<Resident> residents = residentService.getAllResidents();
         return new ResponseEntity<>(residents, HttpStatus.OK);
     }
+
+    @GetMapping("/searchByName")
+    public ResponseEntity<List<Resident>> getResidentByName(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName)
+    {
+        List<Resident> residents = residentService.getResidentByName(firstName, lastName);
+        return new ResponseEntity<>(residents, HttpStatus.OK);
+    }
+
 }
