@@ -1,5 +1,21 @@
 # Changelog
 
+## [VEHMS-M01-T013] - Get Resident by Vehicle Registration Number API - 03-Aug-2025
+### Type: Development
+- API behavior:
+  - Returns **only resident details** associated with the given vehicle.
+  - Does **not return extra vehicle details**.
+- Validation rules:
+  - Registration number must always be **exactly 10 characters**.
+  - If format/length is invalid → return `Invalid registration number`.
+  - If no vehicle found for the provided registration number → return `"No resident found for given registration number"`.
+- Verified functionality via Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M01-T013: Added API to fetch resident details using vehicle registration number with validation
+
+# Changelog
+
 ## [VEHMS-M01-T012] - Create Vehicle API - 02-Sep-2025
 ### Type: Development
 - Implemented `POST /api/vehicles` endpoint to create a new vehicle.

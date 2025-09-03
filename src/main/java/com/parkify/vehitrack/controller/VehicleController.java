@@ -1,5 +1,7 @@
 package com.parkify.vehitrack.controller;
 
+import com.parkify.vehitrack.dto.ResidentDTO;
+import com.parkify.vehitrack.entity.Resident;
 import com.parkify.vehitrack.entity.Vehicle;
 import com.parkify.vehitrack.service.VehicleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,4 +40,10 @@ public class VehicleController {
        Vehicle savedVehicle = vehicleService.createVehicle(vehicle);
        return new ResponseEntity<>(savedVehicle, HttpStatus.OK);
    }
+
+    @GetMapping("/getResidentByRegNo")
+    public ResponseEntity<ResidentDTO> getResidentByRegistrationNumber(@RequestParam String registrationNumber) {
+        ResidentDTO residentDTO = vehicleService.getResidentByRegistrationNumber(registrationNumber);
+        return new ResponseEntity<>(residentDTO, HttpStatus.OK);
+    }
 }

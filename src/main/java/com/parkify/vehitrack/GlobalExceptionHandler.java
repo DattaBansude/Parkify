@@ -1,5 +1,6 @@
 package com.parkify.vehitrack;
 
+import com.parkify.vehitrack.exception.InvalidRegistrationNumberException;
 import com.parkify.vehitrack.exception.ResidentNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,4 +44,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidRegistrationNumberException.class)
+    public ResponseEntity<String> handleInvalidRegistration(InvalidRegistrationNumberException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
