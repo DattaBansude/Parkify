@@ -49,6 +49,15 @@ public class ResidentController {
     }
 
     @GetMapping("/searchByName")
+    @Operation(
+            summary = "Search residents by name",
+            description = "Search residents using optional first name and/or last name."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "List of matching residents returned successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request parameters"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<List<Resident>> getResidentByName(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName)
     {
         List<Resident> residents = residentService.getResidentByName(firstName, lastName);

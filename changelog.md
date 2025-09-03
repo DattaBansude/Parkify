@@ -1,5 +1,20 @@
 # Changelog
 
+## [VEHMS-M01-T012] - Create Vehicle API - 30-Aug-2025
+### Type: Development
+- Implemented `POST /api/vehicles` endpoint to create a new vehicle.
+- Enforced validations:
+  - Vehicle must be linked to an **existing resident**, otherwise request is rejected.
+  - **Registration number** is mandatory and cannot be empty.
+  - Other required fields must be provided.
+- Added proper **error handling** with descriptive messages for invalid input.
+- Verified API functionality using Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M01-T012: Implemented Create Vehicle API with validations and resident association
+
+# Changelog
+
 ## [VEHMS-M01-T011] - Get Resident Details by Name API - 01-Sep-2025
 ### Type: Development
 - Implemented `GET /api/residents/search` endpoint to fetch resident details by **first name, last name, or both**.
