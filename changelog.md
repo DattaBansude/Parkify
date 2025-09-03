@@ -1,6 +1,6 @@
 # Changelog
 
-## [VEHMS-M01-T012] - Create Vehicle API - 30-Aug-2025
+## [VEHMS-M01-T012] - Create Vehicle API - 02-Sep-2025
 ### Type: Development
 - Implemented `POST /api/vehicles` endpoint to create a new vehicle.
 - Enforced validations:
