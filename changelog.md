@@ -1,6 +1,19 @@
 # Changelog
 
-## [VEHMS-M01-T013] - Get Resident by Vehicle Registration Number API - 03-Aug-2025
+## [VEHMS-M02-T020] - Create Visitor API - 04-Sep-2025
+### Type: Development
+- Implemented `POST /api/visitors` endpoint to create new visitor records.
+- Visitor details are always **mapped to an existing resident** (foreign key association).
+- Added **mandatory field validations** to ensure required details are provided.
+- If mandatory fields are missing → return descriptive error message.
+- Verified API functionality through Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M02-T020: Implemented Create Visitor API with resident mapping and validations
+
+# Changelog
+
+## [VEHMS-M01-T013] - Get Resident by Vehicle Registration Number API - 03-Sep-2025
 ### Type: Development
 - API behavior:
   - Returns **only resident details** associated with the given vehicle.
