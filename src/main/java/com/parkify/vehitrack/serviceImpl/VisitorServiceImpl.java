@@ -1,5 +1,7 @@
 package com.parkify.vehitrack.serviceImpl;
 
+import com.parkify.vehitrack.dto.ResidentDTO;
+import com.parkify.vehitrack.dto.VisitorDTO;
 import com.parkify.vehitrack.entity.Resident;
 import com.parkify.vehitrack.entity.Visitors;
 import com.parkify.vehitrack.exception.ValidationException;
@@ -9,6 +11,8 @@ import com.parkify.vehitrack.repository.VisitorRepository;
 import com.parkify.vehitrack.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VisitorServiceImpl implements VisitorService {
@@ -63,5 +67,48 @@ public class VisitorServiceImpl implements VisitorService {
         }
         Visitors visitor = visitorRepository.save(visitors);
         return visitor;
+    }
+
+    @Override
+    public VisitorDTO getVisitorByRegistrationNumber(String registrationNumber) {
+
+        if (registrationNumber == null || registrationNumber.trim().isEmpty()) {
+            throw new ValidationException("Registration number is required!");
+        }
+        if (registrationNumber.length() != 10) {
+            throw new ValidationException("Invalid registration number: must be 10 characters long!");
+        }
+
+        List<Visitors> visitors = visitorRepository.findByVehicalRegisterationNumber(registrationNumber);
+
+        if (visitors.isEmpty()) {
+            throw new ValidationException("No visitor found with registration number: " + registrationNumber);
+        }
+
+        // Take latest or first visitor
+        Visitors visitor = visitors.get(0);
+
+        // Map Resident to DTO
+        ResidentDTO residentDTO = new ResidentDTO(
+                visitor.getResident().getId(),
+                visitor.getResident().getFName(),
+                visitor.getResident().getLName(),
+                visitor.getResident().getFlatNo(),
+                visitor.getResident().getMobileNo(),
+                visitor.getResident().getEmail(),
+                visitor.getResident().getResidentType()
+        );
+
+        // Map Visitor to DTO
+        return new VisitorDTO(
+                visitor.getVisitorName(),
+                visitor.getVehicleName(),
+                visitor.getVehicalRegisterationNumber(),
+                visitor.getVisitPurpose(),
+                visitor.getTimeIn() != null ? visitor.getTimeIn().toString() : null,
+                visitor.getVisitorType() != null ? visitor.getVisitorType().name() : null,
+                visitor.isActiveVisitor(),
+                residentDTO
+        );
     }
 }

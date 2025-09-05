@@ -1,5 +1,22 @@
 # Changelog
 
+## [VEHMS-M02-T021] - Get Visitors by Registration Number API - 05-Sep-2025
+### Type: Development
+- Implemented `GET /api/visitors/getByRegistrationNumber/{regNo}` endpoint.
+- API behavior:
+  - Returns **visitor details** along with **resident details** linked to the given vehicle registration number.
+  - Ensures no extra/irrelevant data is included in the response (only resident + visitor details).
+- Added validation:
+  - Registration number must be valid (length = 10).
+  - If no resident/visitor found → return `"No visitor records found for the given registration number"`.
+- Verified API through Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M02-T021: Implemented Get Visitors API by registration number with resident mapping
+
+
+# Changelog
+
 ## [VEHMS-M02-T020] - Create Visitor API - 04-Sep-2025
 ### Type: Development
 - Implemented `POST /api/visitors` endpoint to create new visitor records.
