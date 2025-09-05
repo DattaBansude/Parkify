@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,18 +25,17 @@ public class Vehicle {
     @Schema(hidden = true)
     private long id;
 
-    @NotBlank(message = "Registration number is mandatory")
     @Column(unique = true, nullable = false)
+    @Pattern(regexp = "^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$",
+            message = "Registration number must match format e.g., MH12AB1234")
     private String registrationNumber;
 
-    @NotBlank(message = "Vehicle name is mandatory")
     @JsonProperty("vName")
     private String vName;
 
     private String color;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Vehicle type is mandatory")
     private VehicleType vehicleType;
 
     @Column(nullable = false)

@@ -10,13 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface VehicleRepository extends JpaRepository<Vehicle,Long> {
+public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     boolean existsByRegistrationNumber(String registrationNumber);
-
-
-//    @Query("SELECT v.resident FROM Vehicle v WHERE v.registrationNumber = :registrationNumber")
-//    Optional<Resident> findResidentByRegistrationNumber(@Param("registrationNumber") String registrationNumber);
 
     Optional<Vehicle> findByRegistrationNumber(String registrationNumber);
 }

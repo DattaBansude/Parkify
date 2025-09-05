@@ -8,7 +8,5 @@ public interface VehicleService {
 
     Vehicle createVehicle(Vehicle vehicle);
 
-//    Resident getResidentByRegistrationNumber(String registrationNumber);
-
     ResidentDTO getResidentByRegistrationNumber(String registrationNumber);
 }

@@ -11,10 +11,11 @@ import java.util.List;
 @Repository
 public interface ResidentRepository extends JpaRepository<Resident, Integer> {
 
-    @Query("SELECT r FROM Resident r " +
-            "WHERE (:firstName IS NULL OR r.fName = :firstName) " +
-            "AND (:lastName IS NULL OR r.lName = :lastName)")
-    List<Resident> findByFirstAndLastName(
-            @Param("firstName") String firstName,
-            @Param("lastName") String lastName);
+    @Query(value = "SELECT * FROM resident r " +
+            "WHERE (:firstName IS NULL OR LOWER(r.f_name) LIKE LOWER(CONCAT('%', :firstName, '%'))) " +
+            "AND (:lastName IS NULL OR LOWER(r.l_name) LIKE LOWER(CONCAT('%', :lastName, '%')))",
+            nativeQuery = true)
+    List<Resident> searchByName(@Param("firstName") String firstName,
+                                @Param("lastName") String lastName);
+
 }
