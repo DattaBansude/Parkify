@@ -10,4 +10,9 @@ public class VisitorHelper {
         visitor.setTimeIn(LocalDateTime.now());
         visitor.setActiveVisitor(true);
     }
+
+    // Decide exit time
+    public static LocalDateTime resolveExitTime(LocalDateTime exitTime) {
+        return (exitTime != null) ? exitTime : LocalDateTime.now();
+    }
 }

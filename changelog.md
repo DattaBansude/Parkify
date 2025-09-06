@@ -1,5 +1,21 @@
 # Changelog
 
+## [VEHMS-M02-T022] - Update Visitor Exit Time API - 06-Sep-2025
+### Type: Development
+- Implemented `PATCH /api/visitors/exit/{regNo}` endpoint to update the **end time (exit time)** of a visitor.
+- API behavior:
+  - Finds visitor details by associated **vehicle registration number**.
+  - Updates only the `endTime` field (other details remain unchanged).
+- Added validation:
+  - Registration number must be valid (length = 10).
+  - If visitor record not found → return `"No visitor found for the given registration number"`.
+- Verified API through Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M02-T022: Implemented API to update visitor exit time using vehicle registration number
+
+# Changelog
+
 ## [VEHMS-M02-T021] - Get Visitors by Registration Number API - 05-Sep-2025
 ### Type: Development
 - Implemented `GET /api/visitors/getByRegistrationNumber/{regNo}` endpoint.

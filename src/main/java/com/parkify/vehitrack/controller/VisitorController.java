@@ -29,4 +29,12 @@ public class VisitorController {
         return new ResponseEntity<>(visitorDTO, HttpStatus.OK);
     }
 
+    @PatchMapping("/exit/{registrationNumber}")
+    public ResponseEntity<Visitors> updateVisitorExitTime(@PathVariable String registrationNumber) {
+
+        Visitors updateVisitor = visitorService.updateVisitorExitTime(registrationNumber);
+        return new ResponseEntity<>(updateVisitor, HttpStatus.OK);
+    }
+
+
 }

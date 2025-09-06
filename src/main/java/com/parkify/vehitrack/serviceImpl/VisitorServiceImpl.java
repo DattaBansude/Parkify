@@ -12,6 +12,7 @@ import com.parkify.vehitrack.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -110,5 +111,29 @@ public class VisitorServiceImpl implements VisitorService {
                 visitor.isActiveVisitor(),
                 residentDTO
         );
+    }
+
+    @Override
+    public Visitors updateVisitorExitTime(String vehicleRegistrationNumber) {
+        if (vehicleRegistrationNumber == null || vehicleRegistrationNumber.trim().isEmpty()) {
+            throw new IllegalArgumentException("Vehicle registration number is required!");
+        }
+
+        if (vehicleRegistrationNumber.length() != 10) {
+            throw new IllegalArgumentException("Invalid registration number: must be 10 characters long!");
+        }
+
+        Visitors visitor = visitorRepository
+                .findTopByVehicalRegisterationNumberOrderByTimeInDesc(vehicleRegistrationNumber)
+                .orElseThrow(() -> new RuntimeException("No active visitor found with vehicle number: " + vehicleRegistrationNumber));
+
+        if (visitor.getTimeOut() != null) {
+            throw new RuntimeException("Visitor already has an exit time recorded!");
+        }
+
+        visitor.setTimeOut(VisitorHelper.resolveExitTime(null));
+        visitor.setActiveVisitor(false);
+
+        return visitorRepository.save(visitor);
     }
 }
