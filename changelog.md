@@ -1,6 +1,6 @@
 # Changelog
 
-## [VEHMS-M02-T026] - Get Active Visitors API - 30-Aug-2025
+## [VEHMS-M02-T026] - Get Active Visitors API - 06-Sep-2025
 ### Type: Development
 - Implemented `GET /api/visitors/active` endpoint to fetch **active visitors in society**.
 - API behavior:
