@@ -39,6 +39,8 @@ public class Visitors {
     @Enumerated(EnumType.STRING)
     private VisitorType visitorType;
 
+    private String visitDuration;
+
     @ManyToOne
     @JoinColumn(name = "resident_id")
     @JsonBackReference

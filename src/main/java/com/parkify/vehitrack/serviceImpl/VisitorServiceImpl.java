@@ -131,6 +131,9 @@ public class VisitorServiceImpl implements VisitorService {
         visitor.setTimeOut(VisitorHelper.resolveExitTime(null));
         visitor.setActiveVisitor(false);
 
+        // Use helper method
+        visitor.setVisitDuration(VisitorHelper.calculateDuration(visitor.getTimeIn(), visitor.getTimeOut()));
+
         return visitorRepository.save(visitor);
     }
 

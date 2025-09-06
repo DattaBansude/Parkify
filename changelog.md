@@ -1,5 +1,22 @@
 # Changelog
 
+## [VEHMS-M02-T028] - Upgrade Visitor Entity with Duration Field - 06-Sep-2025
+### Type: Development
+- Enhanced `Visitor` entity by adding new field `visitDuration`.
+- `visitDuration` stores the **total time visitor spent in society**.
+- Implemented calculation:
+  - `visitDuration = exitTime - entryTime`.
+  - Automatically updated when visitor’s exit time is recorded.
+- Duration stored in standard format → `HH:MM`.
+- Updated DTOs, service, and response models to include `visitDuration`.
+- Verified calculation for multiple test cases (short and long visits).
+- Ensured backward compatibility with existing APIs.
+
+### Commit
+- Commit Message: VEHMS-M02-T028: Added visitDuration field to Visitor entity with HH:MM formatted output
+
+# Changelog
+
 ## [VEHMS-M02-T026] - Get Active Visitors API - 06-Sep-2025
 ### Type: Development
 - Implemented `GET /api/visitors/active` endpoint to fetch **active visitors in society**.
