@@ -1,5 +1,21 @@
 # Changelog
 
+## [VEHMS-M02-T031] - Scheduler to Backup Visitor History - 06-Sep-2025
+### Type: Development
+- Implemented a **Spring Scheduler** to run every night at **11:00 PM**.
+- Scheduler fetches **visitor history records** from the database.
+- Generated **Excel backup file** (`visitor-history-<date>.xlsx`) containing the data.
+- Excel file includes details like visitor name, vehicle number, entry time, exit time, visit duration, and resident mapping.
+- Backup file is stored automatically in the **local drive** under `/backups/visitors/`.
+- Added proper logging to track scheduler execution and file creation status.
+- Ensured exception handling in case of I/O or database issues.
+- Prepared for extension to external/cloud storage if required in future.
+
+### Commit
+- Commit Message: VEHMS-M02-T031: Implemented nightly scheduler to backup visitor history into Excel
+
+# Changelog
+
 ## [VEHMS-M02-T028] - Upgrade Visitor Entity with Duration Field - 06-Sep-2025
 ### Type: Development
 - Enhanced `Visitor` entity by adding new field `visitDuration`.

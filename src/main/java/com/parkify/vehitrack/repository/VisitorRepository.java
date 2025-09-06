@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,4 +29,7 @@ public interface VisitorRepository extends JpaRepository<Visitors, Integer> {
     // Active visitors filtered by types
     @Query("SELECT v FROM Visitors v WHERE v.isActiveVisitor = true AND v.visitorType IN :types")
     List<Visitors> getActiveVisitorsByTypes(@Param("types") List<VisitorType> visitorTypes);
+
+    @Query("SELECT v FROM Visitors v WHERE v.timeIn BETWEEN :start AND :end")
+    List<Visitors> findByTimeInBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }

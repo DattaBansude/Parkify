@@ -16,6 +16,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 @Service
 public class VisitorServiceImpl implements VisitorService {
 
@@ -164,6 +172,81 @@ public class VisitorServiceImpl implements VisitorService {
                     return minimal;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void createDailyVisitorBackup() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime start = today.atStartOfDay();
+        LocalDateTime end = today.plusDays(1).atStartOfDay();
+
+        // Fetch today's visitors
+        List<Visitors> visitors = visitorRepository.findByTimeInBetween(start, end);
+
+        // Create folder if not exists
+        String folderPath = "C:/visitors_log";
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        // File name with today's date
+        String fileName = folderPath + "/Visitors_history_log_" +
+                today.format(DateTimeFormatter.ofPattern("ddMMyyyy")) + ".xlsx";
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Visitors");
+
+            // Header
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("Visitor Name");
+            header.createCell(1).setCellValue("Vehicle Name");
+            header.createCell(2).setCellValue("Registration");
+            header.createCell(3).setCellValue("Phone");
+            header.createCell(4).setCellValue("Purpose");
+            header.createCell(5).setCellValue("Visitor Type");
+            header.createCell(6).setCellValue("Flat Number");
+            header.createCell(7).setCellValue("Resident Name");
+            header.createCell(8).setCellValue("Entry Time");
+            header.createCell(9).setCellValue("Exit Time");
+            header.createCell(10).setCellValue("Duration");
+
+            // Data rows
+            int rowNum = 1;
+            for (Visitors v : visitors) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(v.getVisitorName());
+                row.createCell(1).setCellValue(v.getVehicleName());
+                row.createCell(2).setCellValue(v.getVehicleRegistrationNumber());
+                row.createCell(3).setCellValue(String.valueOf(v.getPhoneNumber()));
+                row.createCell(4).setCellValue(v.getVisitPurpose());
+                row.createCell(5).setCellValue(v.getVisitorType().toString());
+
+                if (v.getResident() != null) {
+                    row.createCell(6).setCellValue(v.getResident().getFlatNo());
+                    row.createCell(7).setCellValue(v.getResident().getFName());
+                } else {
+                    row.createCell(6).setCellValue("");
+                    row.createCell(7).setCellValue("");
+                }
+
+                row.createCell(8).setCellValue(v.getTimeIn() != null ? v.getTimeIn().toString() : "");
+                row.createCell(9).setCellValue(v.getTimeOut() != null ? v.getTimeOut().toString() : "");
+                row.createCell(10).setCellValue(v.getVisitDuration() != null ? v.getVisitDuration() : "");
+            }
+
+            for (int i = 0; i <= 10; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            try (FileOutputStream fileOut = new FileOutputStream(fileName)) {
+                workbook.write(fileOut);
+                System.out.println("Backup created: " + fileName);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

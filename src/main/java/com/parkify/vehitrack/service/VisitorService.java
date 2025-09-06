@@ -15,4 +15,6 @@ public interface VisitorService {
     Visitors updateVisitorExitTime(String vehicleRegistrationNumber);
 
     List<Visitors> getActiveVisitors(List<VisitorType> visitorTypes);
+
+    void createDailyVisitorBackup();
 }
