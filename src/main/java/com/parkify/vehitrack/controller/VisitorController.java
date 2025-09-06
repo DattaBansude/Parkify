@@ -1,12 +1,15 @@
 package com.parkify.vehitrack.controller;
 
 import com.parkify.vehitrack.dto.VisitorDTO;
+import com.parkify.vehitrack.entity.VisitorType;
 import com.parkify.vehitrack.entity.Visitors;
 import com.parkify.vehitrack.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/visitors")
@@ -36,5 +39,12 @@ public class VisitorController {
         return new ResponseEntity<>(updateVisitor, HttpStatus.OK);
     }
 
+    @GetMapping("/active")
+    public ResponseEntity<List<Visitors>> getActiveVisitors(
+            @RequestParam(required = false) List<VisitorType> visitorType) {
 
+        List<Visitors> visitors = visitorService.getActiveVisitors(visitorType);
+        return new ResponseEntity<>(visitors, HttpStatus.OK);
+
+    }
 }

@@ -24,7 +24,7 @@ public class Visitors {
 
     private String vehicleName;
 
-    private String vehicalRegisterationNumber;
+    private String vehicleRegistrationNumber;
 
     private String visitPurpose;
 

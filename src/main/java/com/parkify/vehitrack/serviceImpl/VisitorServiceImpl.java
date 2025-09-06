@@ -3,6 +3,7 @@ package com.parkify.vehitrack.serviceImpl;
 import com.parkify.vehitrack.dto.ResidentDTO;
 import com.parkify.vehitrack.dto.VisitorDTO;
 import com.parkify.vehitrack.entity.Resident;
+import com.parkify.vehitrack.entity.VisitorType;
 import com.parkify.vehitrack.entity.Visitors;
 import com.parkify.vehitrack.exception.ValidationException;
 import com.parkify.vehitrack.helper.VisitorHelper;
@@ -12,8 +13,8 @@ import com.parkify.vehitrack.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VisitorServiceImpl implements VisitorService {
@@ -34,10 +35,10 @@ public class VisitorServiceImpl implements VisitorService {
         }
 
         // Validate registration number
-        if (visitors.getVehicalRegisterationNumber() == null || visitors.getVehicalRegisterationNumber().trim().isEmpty()) {
+        if (visitors.getVehicleRegistrationNumber() == null || visitors.getVehicleRegistrationNumber().trim().isEmpty()) {
             throw new ValidationException("Vehicle registration number is required!");
         }
-        if (visitors.getVehicalRegisterationNumber().length() != 10) {
+        if (visitors.getVehicleRegistrationNumber().length() != 10) {
             throw new ValidationException("Vehicle registration number must be exactly 10 characters!");
         }
 
@@ -52,7 +53,7 @@ public class VisitorServiceImpl implements VisitorService {
             throw new ValidationException("Visit purpose is required!");
         }
 
-        // Validate resident (visitor must be linked to resident)
+        // Validate resident
         if (visitors.getResident() == null || visitors.getResident().getId() == 0) {
             throw new ValidationException("Visitor must be linked to a Resident!");
         }
@@ -62,12 +63,11 @@ public class VisitorServiceImpl implements VisitorService {
         visitors.setResident(resident);
 
         VisitorHelper.setEntryTime(visitors);
-        // Validate timeIn (entry time required)
         if (visitors.getTimeIn() == null) {
             throw new ValidationException("Visitor entry time (timeIn) is required!");
         }
-        Visitors visitor = visitorRepository.save(visitors);
-        return visitor;
+
+        return visitorRepository.save(visitors);
     }
 
     @Override
@@ -80,16 +80,14 @@ public class VisitorServiceImpl implements VisitorService {
             throw new ValidationException("Invalid registration number: must be 10 characters long!");
         }
 
-        List<Visitors> visitors = visitorRepository.findByVehicalRegisterationNumber(registrationNumber);
+        List<Visitors> visitors = visitorRepository.findByVehicleRegistrationNumber(registrationNumber);
 
         if (visitors.isEmpty()) {
             throw new ValidationException("No visitor found with registration number: " + registrationNumber);
         }
 
-        // Take latest or first visitor
         Visitors visitor = visitors.get(0);
 
-        // Map Resident to DTO
         ResidentDTO residentDTO = new ResidentDTO(
                 visitor.getResident().getId(),
                 visitor.getResident().getFName(),
@@ -100,11 +98,10 @@ public class VisitorServiceImpl implements VisitorService {
                 visitor.getResident().getResidentType()
         );
 
-        // Map Visitor to DTO
         return new VisitorDTO(
                 visitor.getVisitorName(),
                 visitor.getVehicleName(),
-                visitor.getVehicalRegisterationNumber(),
+                visitor.getVehicleRegistrationNumber(),
                 visitor.getVisitPurpose(),
                 visitor.getTimeIn() != null ? visitor.getTimeIn().toString() : null,
                 visitor.getVisitorType() != null ? visitor.getVisitorType().name() : null,
@@ -124,7 +121,7 @@ public class VisitorServiceImpl implements VisitorService {
         }
 
         Visitors visitor = visitorRepository
-                .findTopByVehicalRegisterationNumberOrderByTimeInDesc(vehicleRegistrationNumber)
+                .findTopByVehicleRegistrationNumberOrderByTimeInDesc(vehicleRegistrationNumber)
                 .orElseThrow(() -> new RuntimeException("No active visitor found with vehicle number: " + vehicleRegistrationNumber));
 
         if (visitor.getTimeOut() != null) {
@@ -136,4 +133,34 @@ public class VisitorServiceImpl implements VisitorService {
 
         return visitorRepository.save(visitor);
     }
+
+    @Override
+    public List<Visitors> getActiveVisitors(List<VisitorType> visitorTypes) {
+
+        List<Visitors> visitors;
+
+        if (visitorTypes == null || visitorTypes.isEmpty()) {
+            visitors = visitorRepository.getActiveVisitors();
+        } else {
+            visitors = visitorRepository.getActiveVisitorsByTypes(visitorTypes);
+        }
+
+        return visitors.stream()
+                .map(v -> {
+                    Visitors minimal = new Visitors();
+                    minimal.setId(v.getId());
+                    minimal.setVisitorName(v.getVisitorName());
+                    minimal.setVehicleName(v.getVehicleName());
+                    minimal.setVehicleRegistrationNumber(v.getVehicleRegistrationNumber());
+                    minimal.setVisitPurpose(v.getVisitPurpose());
+                    minimal.setVisitorType(v.getVisitorType());
+                    minimal.setActiveVisitor(v.isActiveVisitor());
+                    minimal.setTimeIn(v.getTimeIn());
+                    minimal.setTimeOut(v.getTimeOut());
+                    minimal.setPhoneNumber(v.getPhoneNumber());
+                    return minimal;
+                })
+                .collect(Collectors.toList());
+    }
+
 }

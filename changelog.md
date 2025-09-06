@@ -1,5 +1,21 @@
 # Changelog
 
+## [VEHMS-M02-T026] - Get Active Visitors API - 30-Aug-2025
+### Type: Development
+- Implemented `GET /api/visitors/active` endpoint to fetch **active visitors in society**.
+- API behavior:
+  - Accepts optional filter input → `type=GUEST`, `type=DELIVERY`, or `type=GUEST,DELIVERY`.
+  - Returns visitors matching the filter(s).
+  - If no filter provided → returns **all active visitors**.
+- Ensured only **active (not exited)** visitors are returned.
+- Added validation for enum values (`GUEST`, `DELIVERY`).
+- Verified functionality in Swagger UI and Postman.
+
+### Commit
+- Commit Message: VEHMS-M02-T026: Implemented Get Active Visitors API with optional type filters
+
+# Changelog
+
 ## [VEHMS-M02-T022] - Update Visitor Exit Time API - 06-Sep-2025
 ### Type: Development
 - Implemented `PATCH /api/visitors/exit/{regNo}` endpoint to update the **end time (exit time)** of a visitor.
