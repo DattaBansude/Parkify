@@ -49,9 +49,9 @@ public class VisitorController {
     }
 
     // Manual trigger for testing
-    @PostMapping("/createBackup")
+  /*  @PostMapping("/createBackup")
     public ResponseEntity<String> createBackupNow() {
         visitorService.createDailyVisitorBackup();
         return ResponseEntity.ok(" Visitor backup created successfully!");
-    }
+    }*/
 }
